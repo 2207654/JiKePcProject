@@ -1,10 +1,23 @@
 // 密码账号登录组件
 import './index.scss'
 import logo from '@/assets/logo.png'
-import { Card, Form, Input, Button } from 'antd'
+import { Card, Form, Input, Button, message } from 'antd'
+import { useDispatch } from 'react-redux'
+import { fetchLogin } from '@/store/modules/user'
+import { useNavigate } from 'react-router-dom'
+// 账号：13800000002
+// 密码：246810
 const Login = () => {
-  const onFinish = val => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const onFinish = async val => {
     console.log(val)
+    // 触发异步action fetchLogin
+    await dispatch(fetchLogin(val))
+    // 1.跳转到首页
+    navigate('/')
+    // 2.提示一下用户
+    message.success('登录成功')
   }
   return (
     <div className='login'>
